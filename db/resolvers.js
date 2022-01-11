@@ -3,7 +3,10 @@ const cursos = require('./cursos')
 const resolvers = {
     
     Mutation: {
-        createUsuario: () => "Creadon Usuario"
+        createUsuario: (_, {input}) => {
+            console.log(input)
+            return 'creando'
+        }
     }
 
 }

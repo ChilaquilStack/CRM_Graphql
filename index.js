@@ -1,15 +1,14 @@
 const { ApolloServer } = require('apollo-server')
 const typeDefs = require('./db/schema')
 const resolvers = require('./db/resolvers')
+const connectDB = require('./config/db')
 
 const server = new ApolloServer({
     typeDefs,
-    resolvers,
-    context: () => ({
-        usuario: {
-            id: 1
-        }
-    })
+    resolvers
 })
 
-server.listen().then(({url}) => console.log(`Servidor listo en la URL ${url}`))
+server.listen().then(({url}) => {
+    connectDB();
+    console.log(`Servidor listo en la URL ${url}`)
+})

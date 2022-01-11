@@ -3,7 +3,7 @@ const cursos = require('./cursos')
 const resolvers = {
     
     Query:{
-        getCursos: () => cursos,
+        getCursos: (_ , {input}, ctx, info) => cursos.filter(curso => curso.tecnologia === input.tecnologia),
         getTecnologia: () => cursos
     }
 

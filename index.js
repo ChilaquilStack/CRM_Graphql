@@ -4,7 +4,12 @@ const resolvers = require('./db/resolvers')
 
 const server = new ApolloServer({
     typeDefs,
-    resolvers
+    resolvers,
+    context: () => ({
+        usuario: {
+            id: 1
+        }
+    })
 })
 
 server.listen().then(({url}) => console.log(`Servidor listo en la URL ${url}`))

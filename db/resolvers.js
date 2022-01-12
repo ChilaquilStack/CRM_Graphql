@@ -35,6 +35,15 @@ const resolvers = {
             if(!correctPassword) throw new Error('email y/o password incorrectos')
             const token = jwt.sign({ id: existsUser.id }, process.env.SECRET ,{expiresIn: '24h'})
             return { token }
+        },
+        createProducto: (_, {input}) => {
+            try {
+                const producto = new Producto(input)
+                producto.save()
+                return producto
+            } catch (error) {
+                console.log(error)
+            }
         }
     }
 

@@ -61,6 +61,16 @@ const resolvers = {
             } catch (error) {
                 console.log(error)
             }
+        },
+        updateProducto: async (_, {id, input}) => {
+            try {
+                let producto = await Producto.findById(id)
+                if(!producto) throw new Error("El producto no existe")
+                producto = await Producto.findOneAndUpdate({_id: id}, input, {new: true})
+                return producto
+            } catch (error) {
+                console.log(error)
+            }
         }
     }
 

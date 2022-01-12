@@ -9,6 +9,14 @@ const resolvers = {
         getUser: async (_, { token }) => {
             const userId = await jwt.verify(token, process.env.SECRET)
             return userId
+        },
+        getProductos: async () => {
+            try {
+                const productos = await Producto.find({})
+                return productos
+            } catch (error) {
+                console.log(error)
+            }
         }
     },
     

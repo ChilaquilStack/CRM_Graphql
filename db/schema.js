@@ -43,6 +43,7 @@ const typeDefs = gql`
     type Query {
         getUser(token: String!): Usuario
         getProductos: [Producto]
+        getProducto(id: ID!): Producto
     }
 
     type Mutation {

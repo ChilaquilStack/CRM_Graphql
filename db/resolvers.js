@@ -35,6 +35,14 @@ const resolvers = {
             } catch (error) {
                 console.log(error)
             }
+        },
+        getClientesByVendedor: async (_, {input}, ctx) => {
+            try {
+                const clientes = await Cliente.find({vendedor: ctx.usuario.id.toString()})
+                return clientes
+            } catch (error) {
+                console.log(clientes)
+            }
         }
     },
     
@@ -97,6 +105,7 @@ const resolvers = {
                 let cliente = await Cliente.findOne({ email })
                 if(cliente) throw new Error('El cliente ya existe')
                 cliente = new Cliente(input)
+                console.log(ctx)
                 cliente.vendedor = ctx.usuario.id
                 cliente = await cliente.save()
                 return cliente

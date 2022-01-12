@@ -1,4 +1,5 @@
 const bcryptjs = require('bcryptjs');
+const jwt = require('jsonwebtoken')
 const Usuario = require('../models/Usuario.model');
 
 const resolvers = {
@@ -17,6 +18,15 @@ const resolvers = {
             } catch (error) {
                 console.log(error)
             }
+        },
+        authUser: async (_, {input}) => {
+            const { email, password } = input
+            const existsUser = await Usuario.findOne({email})
+            if(!existsUser) throw new Error('email y/o password incorrectos')
+            const correctPassword = await bcryptjs.compare(password, existsUser.password)
+            if(!correctPassword) throw new Error('email y/o password incorrectos')
+            const token = jwt.sign({id: existsUser.id}, process.env.SECRET ,{expiresIn: '24h'})
+            return { token }
         }
     }
 

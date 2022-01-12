@@ -6,7 +6,7 @@ const ClienteSchema = mongoose.Schema({
         required: true,
         trim: true
     },
-    epellido: {
+    apellido: {
         type: String,
         required: true,
         trim: true
@@ -26,7 +26,7 @@ const ClienteSchema = mongoose.Schema({
         trim: true
     },
     vendedor: {
-        id: mongoose.Schema.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         required: true,
         ref: 'Usuario'
     }

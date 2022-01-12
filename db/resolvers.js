@@ -27,6 +27,14 @@ const resolvers = {
             } catch (error) {
                 console.log(error)
             }
+        },
+        getClientes: async () => {
+            try {
+                const clientes = Cliente.find({})
+                return clientes
+            } catch (error) {
+                console.log(error)
+            }
         }
     },
     

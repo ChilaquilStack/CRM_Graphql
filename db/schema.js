@@ -27,12 +27,12 @@ const typeDefs = gql`
     }
 
     type Query {
-        getCurso: String
+        getUser(token: String!): Usuario
     }
 
     type Mutation {
         createUsuario(input: UsuarioInput!): Usuario
-        authUser(input: AuthUserInput): Token
+        authUser(input: AuthUserInput!): Token
     }
 `
 

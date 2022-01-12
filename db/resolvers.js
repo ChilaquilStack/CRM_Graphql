@@ -1,6 +1,7 @@
-const bcryptjs = require('bcryptjs');
+const bcryptjs = require('bcryptjs')
 const jwt = require('jsonwebtoken')
-const Usuario = require('../models/Usuario.model');
+const Usuario = require('../models/Usuario.model')
+const Producto = require('../models/Producto.model')
 
 const resolvers = {
 

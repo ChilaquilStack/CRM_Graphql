@@ -2,6 +2,7 @@ const bcryptjs = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const Usuario = require('../models/Usuario.model')
 const Producto = require('../models/Producto.model')
+const Cliente = require('../models/Clientes.model')
 
 const resolvers = {
 
@@ -79,6 +80,18 @@ const resolvers = {
                 producto = await Producto.findOneAndDelete({_id: id})
                 return producto
             } catch (error) {
+                console.log(error)
+            }
+        },
+        createCliente: async (_, {input}) => {
+            const { email } = input
+            try {   
+                let cliente = await Cliente.findOne({ email })
+                if(cliente) throw new Error('El cliente ya existe')
+                cliente = new Cliente(input)
+                await cliente.save()
+                return cliente
+            } catch {
                 console.log(error)
             }
         }

@@ -22,6 +22,15 @@ const typeDefs = gql`
         creado: String
     }
 
+    type Cliente {
+        id: ID
+        nombre: String
+        apellido: String
+        empresa: String
+        email: String
+        telefono: String
+    }
+
     input UsuarioInput {
         nombre: String!
         apellido: String!
@@ -38,6 +47,14 @@ const typeDefs = gql`
         nombre: String!
         existencia: Int!
         precio: Float!
+    }
+
+    input ClienteInput {
+        nombre: String!
+        apellido: String!
+        empresa: String!
+        email: String!
+        telefono: String
     }
 
     type Query {

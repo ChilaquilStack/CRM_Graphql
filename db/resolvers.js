@@ -131,6 +131,18 @@ const resolvers = {
             } catch (error) {
                 console.log(error)
             }
+        },
+        deleteCliente: async(_, {id}, ctx) => {
+            try {
+                let cliente = await Cliente.findById(id)
+                if(!cliente) throw new Error('No existe el usuario')
+                if(cliente.vendedor.toString() !== ctx.usuario.id.toString())
+                    throw new Error('No tienes permisos')
+                cliente = await Cliente.findOneAndDelete(id)
+                return cliente
+            } catch (error) {
+                console.log(error)
+            }
         }
     }
 

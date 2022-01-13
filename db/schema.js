@@ -73,6 +73,7 @@ const typeDefs = gql`
         updateProducto(id: ID!, input: ProductoInput): Producto
         deleteProducto(id: ID!): Producto
         createCliente(input: ClienteInput!): Cliente
+        updateCliente(id: ID!, input: ClienteInput!): Cliente
     }
 `
 

@@ -43,7 +43,7 @@ const typeDefs = gql`
 
     type PedidoGrupo {
         id: ID
-        cantidad: int
+        cantidad: Int
     }
 
     input UsuarioInput {
@@ -74,7 +74,7 @@ const typeDefs = gql`
 
     input PedidoProductoInput {
         id: ID!
-        cantidad: int
+        cantidad: Int
     }
 
     input PedidoInput {

@@ -1,9 +1,9 @@
 const Producto = require('../models/Producto.model')
 
-const useProducto = async (cb) => {
+const useProducto = model => async (cb) => {
     let [data, error] = [null, null]
     try {
-        data = await cb(Producto)
+        data = await cb(model)
     } catch (e) {
         error = e
     }

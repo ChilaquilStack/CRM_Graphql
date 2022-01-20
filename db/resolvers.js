@@ -4,48 +4,39 @@ const Usuario = require('../models/Usuario.model')
 const Cliente = require('../models/Clientes.model')
 const { 
     getProducto,
+    getProductos,
     deleteProducto,
     updateProducto,
     createProducto,
-    getProductos 
 } = require('../controllers/Producto.controller')
+
+const  {
+    getCliente,
+    getClientes,
+    updateCliente,
+    createCliente,
+    deleteCliente,
+    getClientesByVendedor,
+} = require('../controllers/Cliente.controller')
 
 const resolvers = {
 
     Query: {
-        getProductos,
+        getCliente,
+        getClientes,
         getProducto,
+        getProductos,
+        getClientesByVendedor,
         getUser: async (_, { token }) => {
             const userId = await jwt.verify(token, process.env.SECRET)
             return userId
-        },
-        getClientes: async () => {
-            try {
-                const clientes = Cliente.find({})
-                return clientes
-            } catch (error) {
-                console.log(error)
-            }
-        },
-        getClientesByVendedor: async (_, {input}, ctx) => {
-            try {
-                const clientes = await Cliente.find({vendedor: ctx.usuario.id.toString()})
-                return clientes
-            } catch (error) {
-                console.log(clientes)
-            }
-        },
-        getCliente: async (_, {id}, ctx) => {
-            const cliente = await Cliente.findById(id)
-            if(!cliente) throw new Error('El cliente no existe')
-            if(cliente.vendedor.toString() === ctx.usuario.id.toString())
-                return cliente
-            else
-                throw new Error('El cliente no te pertenece')
         }
     },
     
     Mutation: {
+        deleteCliente,
+        updateCliente,
+        createCliente,
         deleteProducto,
         updateProducto,
         createProducto,
@@ -72,43 +63,7 @@ const resolvers = {
             const token = jwt.sign({ id: existsUser.id }, process.env.SECRET ,{expiresIn: '24h'})
             return { token }
         },
-        createCliente: async (_, {input}, ctx) => {
-            const { email } = input
-            try {   
-                let cliente = await Cliente.findOne({ email })
-                if(cliente) throw new Error('El cliente ya existe')
-                cliente = new Cliente(input)
-                cliente.vendedor = ctx.usuario.id
-                cliente = await cliente.save()
-                return cliente
-            } catch(error) {
-                console.log(error)
-            }
-        },
-        updateCliente: async(_, {id, input}, ctx) => {
-            try {
-                let cliente = await Cliente.findById(id)
-                if(!cliente) throw new Error('El cliente no existe')
-                if(cliente.vendedor.toString() !== ctx.usuario.id.toString())
-                    throw new Error('No tienes permisos')
-                cliente = await Cliente.findOneAndUpdate({_id: id}, input, {new: true})
-                return cliente
-            } catch (error) {
-                console.log(error)
-            }
-        },
-        deleteCliente: async(_, {id}, ctx) => {
-            try {
-                let cliente = await Cliente.findById(id)
-                if(!cliente) throw new Error('No existe el usuario')
-                if(cliente.vendedor.toString() !== ctx.usuario.id.toString())
-                    throw new Error('No tienes permisos')
-                cliente = await Cliente.findOneAndDelete(id)
-                return cliente
-            } catch (error) {
-                console.log(error)
-            }
-        }
+        
     }
 
 }
